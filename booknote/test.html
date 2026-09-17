@@ -1,0 +1,8 @@
+<!doctype html><meta charset="utf-8"><title>BookNote 数据测试</title>
+<style>body{font:14px system-ui;padding:20px;background:#f7f2ed;color:#3b3029}pre{white-space:pre-wrap;background:#fff;padding:12px;border-radius:8px}</style>
+<h2>BookNote 数据测试</h2><p>这里直接读取 Firefox 本地存储。</p><pre id="out">读取中…</pre>
+<script>
+browser.storage.local.get("booknoteNotes").then(function(r){
+document.getElementById("out").textContent=JSON.stringify(r.booknoteNotes||[],null,2);
+});
+</script>
