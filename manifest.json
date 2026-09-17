@@ -1,0 +1,143 @@
+{
+  "manifest_version": 2,
+  "name": "Read Aloud + BookNote Offline",
+  "short_name": "__MSG_extension_short_name__",
+  "description": "BookNote Offline：本地书架、书籍信息与封面、书架搜索、搜索结果导出与摘要笔记；Reader 独立。",
+  "version": "7.10.140",
+  "incognito": "spanning",
+  "default_locale": "en",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "booknote-offline@local",
+      "update_url": "https://raw.githubusercontent.com/gooidtto/BookNote-Offline/release/p0-update-channel/updates/updates.json"
+    },
+    "gecko_android": {}
+  },
+  "browser_action": {
+    "default_area": "navbar",
+    "default_icon": "img/icon.png",
+    "default_popup": "popup.html?isPopup=1"
+  },
+  "icons": {
+    "16": "img/icon-16.png",
+    "48": "img/icon-48.png",
+    "128": "img/icon.png"
+  },
+  "permissions": [
+    "activeTab",
+    "menus",
+    "identity",
+    "storage",
+    "https://translate.google.com/",
+    "downloads",
+    "tabs",
+    "unlimitedStorage"
+  ],
+  "optional_permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "webNavigation",
+    "http://*/",
+    "https://*/",
+    "file://*/*"
+  ],
+  "web_accessible_resources": [
+    "js/page/*",
+    "img/*",
+    "css/*",
+    "models/*",
+    "js/booknote-search-worker.js"
+  ],
+  "content_security_policy": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://piper.ttstool.com/"
+      ],
+      "js": [
+        "js/rxjs.umd.min.js",
+        "js/messaging.js",
+        "js/piper.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://supertonic.ttstool.com/"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "js/rxjs.umd.min.js",
+        "js/messaging.js",
+        "js/supertonic.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>",
+        "http://localhost/*",
+        "http://127.0.0.1/*"
+      ],
+      "js": [
+        "js/booknote-content.js",
+        "js/booknote-floating-ui.js"
+      ],
+      "css": [
+        "css/booknote.css"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "match_origin_as_fallback": true,
+      "match_about_blank": true
+    }
+  ],
+  "background": {
+    "scripts": [
+      "js/rxjs.umd.min.js",
+      "js/defaults.js",
+      "js/messaging.js",
+      "js/google-translate.js",
+      "js/tts-engines.js",
+      "js/speech.js",
+      "js/document.js",
+      "js/events.js",
+      "js/booknote-background.js"
+    ],
+    "persistent": true
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "description": "Toggle popup"
+    },
+    "play": {
+      "suggested_key": {
+        "default": "Alt+O"
+      },
+      "description": "Play/Stop"
+    },
+    "pause": {
+      "suggested_key": {
+        "default": "Alt+P"
+      },
+      "description": "Play/Pause"
+    },
+    "stop": {
+      "description": "Stop"
+    },
+    "forward": {
+      "suggested_key": {
+        "default": "Alt+Period"
+      },
+      "description": "Forward"
+    },
+    "rewind": {
+      "suggested_key": {
+        "default": "Alt+Comma"
+      },
+      "description": "Rewind"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}
